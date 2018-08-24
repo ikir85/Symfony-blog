@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Edition articles</h1>
+    {#ouvre la balise form#}
+    {{ form_start (form) }}
+
+    {#bloc de formulaire pour le champ name #}
+    {{ form_row (form.title) }}
+    {{ form_row (form.content) }}
+    {{ form_row (form.category) }}
+    {{ form_row (form.image) }}
+
+    {%  if original_image is not null %}
+       <p>
+          Actuellement :
+           <img src="{{ asset('images/' ~ original_image) }}" height="200px">
+       </p>
+    {% endif %}
+
+    <div class="form-btn-group text-right">
+        <button type="submit" class="btn btn-primary">
+            Enregistrer
+        </button>
+        <a class="btn btn-outline-secondary" href="{{ path('app_admin_article_index')}}">
+            Retour
+        </a>
+    </div>
+
+    {#ferme la balise form#}
+    {{ form_end(form) }}
+
+{% endblock %}

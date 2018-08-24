@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gestion articles</h1>
+    <p>
+        <a href="{{ path('app_admin_article_edit') }}">
+            Ajouter un article
+        </a>
+    </p>
+
+    <table class="table">
+        <tr >
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Date de publication</th>
+            <th>Catégorie</th>
+            <th>Auteur</th>
+            <th>Nb commentaires<th>
+            <th width="260px"></th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+
+                <td>{{ article.id}}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.publicationDate|date('d/m/Y H:i') }}</td>
+                <td>{{ article.category }}</td>
+                <td>{{ article.author }}</td>
+                <td>
+                    <a href="{{ path('app_admin_comment_index', {id: article.id}) }}">
+                        {{ article.comments|length }}
+                    </a>
+
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_admin_article_edit', {id: article.id}) }}">
+                        Modifier
+                    </a>
+                    <a class="btn btn-danger" href="{{ path('app_admin_article_delete', {id: article.id}) }}">
+                        Supprimer
+                    </a>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

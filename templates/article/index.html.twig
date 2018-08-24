@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <h1>{{ article.title }}</h1>
+    <p>
+        Par {{ article.author }},
+        <em>{{ article.publicationDate|date('d/m/Y H:i') }}</em><br>
+        <strong>dans {{ article.category }}</strong>
+    </p>
+
+    {% if article.image is not null %}
+        <p>{{ article.content|nl2br }}</p>
+    <div class="text-left">
+        <img src="{{ asset('images/' ~ article.image) }}"  style="width: 400px">
+    </div>
+    {% endif %}
+    <br>
+
+    <h2>Commentaires</h2>
+
+    {% if app.user is null %}
+    <div class="alert alert-info">Connectez vous pour laisser un commentaire</div>
+    {% else %}
+
+        {{ form_start (form) }}
+
+           {{ form_row (form.content) }}
+
+
+    <div class="form-btn-group text-right">
+        <button type="submit" class="btn btn-primary">
+            Enregistrer
+        </button>
+    </div>
+        {{ form_end(form) }}
+    {% endif %}
+
+
+    {% for comment in article.comments %}
+        <h5>
+            {{ comment.user }}
+            <small>
+                {{ comment.publicationDate|date('d/m/y H:i') }}
+            </small>
+        </h5>
+        <div class="card bg-light mb-3">
+            <div class="card-body">{{ comment.content|nl2br }}</div>
+        </div>
+    {% else %}
+    <p>Aucun commentaire pour cet article.</p>
+    {% endfor %}
+
+{% endblock %}
